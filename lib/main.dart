@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
   if (kIsWeb) {
-  } else {
-    sqfliteFfiInit();
-    databaseFactory = databaseFactoryFfi;
+    databaseFactory = databaseFactoryFfiWeb;
   }
   runApp(const DateTagApp());
 }
@@ -157,7 +156,14 @@ class _DateTagScreenState extends State<DateTagScreen> {
                   controller: _controller,
                   decoration: const InputDecoration(
                       labelText: 'Tag', border: OutlineInputBorder()),
-                ))
+                )),
+                IconButton(
+                    onPressed: _selectDate,
+                    icon: const Icon(Icons.calendar_today),
+                    tooltip: "Select date"),
+                ElevatedButton(
+                    onPressed: _addTag,
+                    child: Text(DateFormat("MMM dd").format(_selectedDate)))
               ],
             ),
           )
