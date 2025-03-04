@@ -166,7 +166,17 @@ class _DateTagScreenState extends State<DateTagScreen> {
                     child: Text(DateFormat("MMM dd").format(_selectedDate)))
               ],
             ),
-          )
+          ),
+          Expanded(child: ListView.builder(
+            itemCount: _tags.length,
+            itemBuilder: (BuildContext ctx, int i) => ListTile(
+              title: Text( _tags[i].tag),
+              subtitle: Text(DateFormat.yMMMd().format(_tags[i].date)),
+              trailing: IconButton(onPressed: () => _deleteTag(_tags[i].id!), icon: const Icon(Icons.delete, color: Colors.red,)),
+              
+            )
+            )
+            )
         ],
       ),
     );
